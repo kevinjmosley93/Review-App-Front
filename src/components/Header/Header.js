@@ -4,37 +4,37 @@ import Navbar from 'react-bootstrap/Navbar'
 
 const authenticatedOptions = (
   <Fragment>
-    <Nav.Link href="#movies">Movies Page</Nav.Link>
-    <Nav.Link href="#movie-create">Create Movie Page</Nav.Link>
-    <Nav.Link href="#change-password">Change Password</Nav.Link>
-    <Nav.Link href="#sign-out">Sign Out</Nav.Link>
+    <Nav.Link href='#movies'>Movies Page</Nav.Link>
+    <Nav.Link href='#movie-create'>Create Movie Page</Nav.Link>
+    <Nav.Link href='#change-password'>Change Password</Nav.Link>
+    <Nav.Link href='#sign-out'>Sign Out</Nav.Link>
   </Fragment>
 )
 
 const unauthenticatedOptions = (
   <Fragment>
-    <Nav.Link href="#sign-up">Sign Up</Nav.Link>
-    <Nav.Link href="#sign-in">Sign In</Nav.Link>
+    <Nav.Link href='#sign-up'>Sign Up</Nav.Link>
+    <Nav.Link href='#sign-in'>Sign In</Nav.Link>
   </Fragment>
 )
 
 const alwaysOptions = (
   <Fragment>
-    <Nav.Link href="#/">Home</Nav.Link>
+    <Nav.Link href='#/'>Home</Nav.Link>
   </Fragment>
 )
 
 const Header = ({ user }) => (
-  <Navbar bg="warning" variant="dark" expand="md">
-    <Navbar.Brand href="#">
-      react-auth-template
-    </Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
-      <Nav className="ml-auto">
-        { user && <span className="navbar-text mr-2">Welcome, {user.email}</span>}
-        { alwaysOptions }
-        { user ? authenticatedOptions : unauthenticatedOptions }
+  <Navbar bg='dark' variant='dark' expand='md'>
+    <Navbar.Brand href='#'>Review Me App</Navbar.Brand>
+    <Navbar.Toggle aria-controls='basic-navbar-nav' />
+    <Navbar.Collapse id='basic-navbar-nav'>
+      <Nav className='ml-auto'>
+        {user && (
+          <span className='navbar-text mr-2'>Welcome, {user.email}</span>
+        )}
+        {alwaysOptions}
+        {user ? authenticatedOptions : unauthenticatedOptions}
       </Nav>
     </Navbar.Collapse>
   </Navbar>
