@@ -77,9 +77,7 @@ class App extends Component {
           />
         ))}
         <main className='container'>
-          <Route exact path='/' render={() => (
-            <Product />
-          )} />
+          <Route exact path='/' render={() => <Product user={user} />} />
           <Route
             path='/sign-up'
             render={() => (

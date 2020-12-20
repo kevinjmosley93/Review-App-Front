@@ -1,51 +1,35 @@
-import moment from 'moment'
 import React from 'react'
-import {
-  Divider,
-  Header,
-  Grid,
-  Card,
-  Button,
-  Image,
-  Icon
-} from 'semantic-ui-react'
+import { Card, Button, Image, Icon, Rating } from 'semantic-ui-react'
 
-const Reviews = () => {
+const Reviews = ({ review, user }) => {
   return (
-    <div>
-      <Header as='h4' floated='right'>
-        Leave Us a Review
-      </Header>
-      <br />
-      <Divider />
-      <Grid.Row>
-        {' '}
-        <Card>
-          <Card.Content>
-            <Image
-              floated='right'
-              size='mini'
-              src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+    <div style={{ margin: '1.5rem' }} className='card'>
+      <Card>
+        <Card.Content>
+          <Image floated='right' size='mini' src={review.img} />
+          <Card.Header>{review.title}</Card.Header>
+          <Card.Meta>{review.name}</Card.Meta>
+          <Card.Meta>
+            <Rating
+              icon='star'
+              disabled={true}
+              defaultRating={review.rating}
+              maxRating={5}
             />
-            <Card.Header>Reviewer Name</Card.Header>
-            <Card.Meta>{moment().format('LLL')}</Card.Meta>
-            <Card.Description>
-              Sausage beef ribs pork loin leberkas doner tail strip steak flank
-              ham hock kevin chuck t-bone buffalo.
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className='ui two buttons'>
-              <Button basic color='green'>
-                <Icon name='thumbs up' />
-              </Button>
-              <Button basic color='red'>
-                <Icon name='thumbs down' />
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
-      </Grid.Row>
+          </Card.Meta>
+          <Card.Description>{review.content}</Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <div className='ui two buttons'>
+            <Button basic color='green'>
+              <Icon name='thumbs up' />
+            </Button>
+            <Button basic color='red'>
+              <Icon name='thumbs down' />
+            </Button>
+          </div>
+        </Card.Content>
+      </Card>
     </div>
   )
 }
