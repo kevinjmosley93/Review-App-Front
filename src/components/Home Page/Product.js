@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import {
   Grid,
@@ -6,20 +6,17 @@ import {
   Image,
   Rating,
   Divider,
-  Button,
-  Icon,
-  Modal,
-  Form
+  Button
 } from 'semantic-ui-react'
 import Reviews from './Reviews'
 import reviews from '../../data/reviewData'
+import ReviewCreate from '../Reviews/ReviewCreate'
 
 const reviewAverage = reviews.reduce((sum, review) => {
   return sum + review.rating / 5
 }, 0)
 
 const Product = ({ user }) => {
-  const [open, setOpen] = useState(false)
   return (
     <div style={{ margin: '3rem' }}>
       <Grid>
@@ -59,42 +56,7 @@ const Product = ({ user }) => {
         </Grid.Row>
       </Grid>
       {user ? (
-        <Modal
-          closeIcon
-          className='modal'
-          onClose={() => setOpen(false)}
-          onOpen={() => setOpen(true)}
-          open={open}
-          size='small'
-          trigger={<Button floated='right'>Write a Review</Button>}>
-          <Header as='h1'>Write Your Review Below</Header>
-          <Modal.Content>
-            <Form>
-              <Form.Field>
-                <label>Name</label>
-                <input required placeholder='First Name & Last Initial' />
-              </Form.Field>
-              <Form.Field>
-                <label>Review Title</label>
-                <input required placeholder='Review title' />
-              </Form.Field>
-              <Form.Field>
-                <label>Review Content</label>
-                <textarea required placeholder='Review text' />
-              </Form.Field>
-              <Form.Field>
-                <label>Rating</label>
-                <input required placeholder='1 - 5' />
-              </Form.Field>
-              <Button type='submit'>Submit</Button>
-            </Form>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button color='green' inverted onClick={() => setOpen(false)}>
-              <Icon name='checkmark' /> Close
-            </Button>
-          </Modal.Actions>
-        </Modal>
+        <ReviewCreate user={user}/>
       ) : (
         <Button floated='right'>
           <Link style={{ color: 'black' }} to='/sign-in'>
