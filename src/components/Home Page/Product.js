@@ -17,7 +17,7 @@ const Product = ({ user }) => {
       .catch(err => console.log(err))
   }, [])
   const reviewAverage = reviews.reduce((sum, review) => {
-    return sum + review.rating / 5
+    return sum + review.rating / reviews.length
   }, 0)
   console.log('res from api in product component', reviewAverage)
   return (
@@ -35,7 +35,7 @@ const Product = ({ user }) => {
             <div>
               <Header as='h1'>Sony PS5</Header>
               <Header as='h2'>$500</Header>
-              {reviewAverage !== 0 && (
+              {reviews.length !== 0 && (
                 <Rating
                   style={{ marginRight: '.5rem' }}
                   icon='star'
@@ -44,7 +44,7 @@ const Product = ({ user }) => {
                   maxRating={5}
                 />
               )}
-              ({reviews.length})
+              ({reviews.length === 0 ? 'Add a review below' : reviews.length})
             </div>
             <p style={{ marginTop: '1.5rem' }}>
               Bacon ipsum dolor amet strip steak ham cow pork burgdoggen
@@ -72,9 +72,18 @@ const Product = ({ user }) => {
       <br />
       <Divider />
       <Grid.Row style={{ margin: '0 auto' }}>
-        {reviews.map(review => (
-          <Reviews user={user} key={review._id} review={review} />
-        ))}
+        {reviews.map(review => {
+          console.log('this is id', review._id)
+          return (
+            <Reviews
+              setReview={setReviews}
+              user={user}
+              key={review._id}
+              reviewId={review._id}
+              review={review}
+            />
+          )
+        })}
       </Grid.Row>
     </div>
   )

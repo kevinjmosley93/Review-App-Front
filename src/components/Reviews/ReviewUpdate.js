@@ -1,46 +1,54 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Button, Form, Header, Icon, Modal } from 'semantic-ui-react'
-import { createReviews } from '../../api/reviews'
 
-const ReviewCreate = ({ user, reviewId }) => {
+import { Button, Form, Header, Icon, Modal } from 'semantic-ui-react'
+import { updateReviews, showReviews } from '../../api/reviews'
+
+const ReviewUpdate = ({ user, review, reviewId, setReview }) => {
   const [open, setOpen] = useState(false)
-  const [created, setCreated] = useState(false)
-  const [review, setReview] = useState({
-    review: {
-      name: '',
-      title: '',
-      content: '',
-      rating: 0
-    }
+  const [updated, setUpdated] = useState(false)
+  const [reviewList, setReviewList] = useState({
+    name: '',
+    title: '',
+    content: '',
+    rating: 0
   })
+
+  useEffect(() => {
+    // show request
+    showReviews(user, reviewId)
+      .then(res => setReviewList(res.data.review))
+      .then(() => console.log('this is the use effect from review update'))
+      .catch(err => console.log(err))
+  }, [])
+
   const handleChange = e => {
     console.log('changing')
     const updatedField = { [e.target.name]: e.target.value }
-    setReview(currState => {
-      const updatedReview = { ...currState.review, ...updatedField }
-      return { review: updatedReview }
+    setReviewList(currState => {
+      const updatedReview = { ...currState, ...updatedField }
+      return updatedReview
     })
   }
-  console.log('this is id', review.review._id)
+  console.log('this is id', reviewId)
+
   const handleSubmit = e => {
     e.preventDefault()
-    createReviews(user, review.review)
-      .then(res => {
-        setCreated(true)
-        console.log('this is api respone', res)
+
+    updateReviews(user, reviewList, reviewId)
+      .then(() => {
+        setUpdated(true)
+        console.log('updated is', updated)
       })
       .then(setOpen(false))
-      .then(() => {
-        return review.review
-      })
       .catch(err => {
         console.log(err)
       })
   }
-  if (created) {
-    return <Redirect to='/reviews'/>
+  if (updated) {
+    return <Redirect to={`/reviews/${reviewId}`} />
   }
+
   return (
     <Modal
       closeIcon
@@ -49,37 +57,39 @@ const ReviewCreate = ({ user, reviewId }) => {
       onOpen={() => setOpen(true)}
       open={open}
       size='small'
-      trigger={<Button floated='right'>Write a Review</Button>}>
-      <Header as='h1'>Write Your Review Below</Header>
+      trigger={
+        <Button size='small' basic>
+          <Icon name='edit' />
+          Update Review
+        </Button>
+      }>
+      <Header as='h1'>Update Your Review Below</Header>
       <Modal.Content>
         <Form onSubmit={handleSubmit}>
           <Form.Field>
             <label>Name</label>
             <input
-              value={review.name}
+              value={reviewList.name}
               onChange={handleChange}
               name='name'
-              required
               placeholder='First Name & Last Initial'
             />
           </Form.Field>
           <Form.Field>
             <label>Review Title</label>
             <input
-              value={review.title}
+              value={reviewList.title}
               onChange={handleChange}
               name='title'
-              required
               placeholder='Review title'
             />
           </Form.Field>
           <Form.Field>
             <label>Review Content</label>
             <textarea
-              value={review.content}
+              value={reviewList.content}
               onChange={handleChange}
               name='content'
-              required
               placeholder='Review text'
             />
           </Form.Field>
@@ -89,10 +99,9 @@ const ReviewCreate = ({ user, reviewId }) => {
               type='number'
               min={1}
               max={5}
-              value={review.rating}
+              value={reviewList.rating}
               onChange={handleChange}
               name='rating'
-              required
               placeholder='1 - 5'
             />
           </Form.Field>
@@ -108,4 +117,4 @@ const ReviewCreate = ({ user, reviewId }) => {
   )
 }
 
-export default ReviewCreate
+export default ReviewUpdate

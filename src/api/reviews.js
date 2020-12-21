@@ -18,3 +18,24 @@ export const indexReviews = () => {
     url: apiUrl + '/reviews'
   })
 }
+
+export const updateReviews = (user, review, id) => {
+  return axios({
+    method: 'PATCH',
+    url: apiUrl + '/reviews/' + id,
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    },
+    data: { review }
+  })
+}
+
+export const showReviews = (user, id) => {
+  return axios({
+    method: 'GET',
+    url: apiUrl + '/reviews/' + id,
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }
+  })
+}

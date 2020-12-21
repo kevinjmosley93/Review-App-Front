@@ -92,6 +92,16 @@ class App extends Component {
           />
           <AuthenticatedRoute
             user={user}
+            exact path='/reviews'
+            render={() => <Product user={user} />}
+          />
+          <AuthenticatedRoute
+            user={user}
+            path='/reviews/:id'
+            render={() => <Product user={user} />}
+          />
+          <AuthenticatedRoute
+            user={user}
             path='/sign-out'
             render={() => (
               <SignOut
