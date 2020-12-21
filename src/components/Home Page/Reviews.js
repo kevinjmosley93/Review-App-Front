@@ -1,11 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Card, Button, Icon, Rating } from 'semantic-ui-react'
+import ReviewUpdate from '../Reviews/ReviewUpdate'
 
-const Reviews = ({ review, user }) => {
+const Reviews = ({ review, setReview, user }) => {
   console.log('this is review', review)
   // console.log('this is user', user)
   return (
-    <div style={{ margin: '1.5rem' }} className='card'>
+    <div style={{ margin: '1.5rem' }} className='reviewCard'>
       <Card>
         <Card.Content>
           <Card.Header>{review.title}</Card.Header>
@@ -21,16 +23,26 @@ const Reviews = ({ review, user }) => {
           <Card.Description>{review.content}</Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <div className='ui two buttons'>
-            <Button size='small' basic>
-              <Icon name='edit' />
-              Update Review
-            </Button>
-            <Button size='small' basic>
-              <Icon name='delete' />
-              Delete Review
-            </Button>
-          </div>
+          {user !== null ? (
+            <div className='ui two buttons'>
+              <ReviewUpdate
+                user={user}
+                setReview={setReview}
+                review={review}
+                reviewId={review._id}
+              />
+              <Button size='small' basic>
+                <Icon name='delete' />
+                Delete Review
+              </Button>
+            </div>
+          ) : (
+            <Link to='/sign-in'>
+              <span className='text-center'>
+                We would love to hear from you!
+              </span>
+            </Link>
+          )}
         </Card.Content>
       </Card>
     </div>
