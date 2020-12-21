@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  Grid,
-  Header,
-  Image,
-  Rating,
-  Divider,
-  Button,
-  Icon,
-  Modal,
-  Form
-} from 'semantic-ui-react'
+import { Grid, Header, Image, Rating, Divider, Button } from 'semantic-ui-react'
 import Reviews from './Reviews'
-import reviews from '../../data/reviewData'
-
-const reviewAverage = reviews.reduce((sum, review) => {
-  return sum + review.rating / 5
-}, 0)
+// import reviews from '../../data/reviewData'
+import ReviewCreate from '../Reviews/ReviewCreate'
+import { indexReviews } from '../../api/reviews'
 
 const Product = ({ user }) => {
-  const [open, setOpen] = useState(false)
+  const [reviews, setReviews] = useState([])
+  useEffect(() => {
+    indexReviews(user)
+      .then(res => {
+        setReviews(res.data.review)
+        console.log('this is the res', res)
+      })
+      .catch(err => console.log(err))
+  }, [])
+  const reviewAverage = reviews.reduce((sum, review) => {
+    return sum + review.rating / 5
+  }, 0)
+  console.log('res from api in product component', reviewAverage)
   return (
     <div style={{ margin: '3rem' }}>
       <Grid>
@@ -35,13 +35,15 @@ const Product = ({ user }) => {
             <div>
               <Header as='h1'>Sony PS5</Header>
               <Header as='h2'>$500</Header>
-              <Rating
-                style={{ marginRight: '.5rem' }}
-                icon='star'
-                disabled={true}
-                defaultRating={reviewAverage}
-                maxRating={5}
-              />
+              {reviewAverage !== 0 && (
+                <Rating
+                  style={{ marginRight: '.5rem' }}
+                  icon='star'
+                  disabled={true}
+                  defaultRating={reviewAverage}
+                  maxRating={5}
+                />
+              )}
               ({reviews.length})
             </div>
             <p style={{ marginTop: '1.5rem' }}>
@@ -59,42 +61,7 @@ const Product = ({ user }) => {
         </Grid.Row>
       </Grid>
       {user ? (
-        <Modal
-          closeIcon
-          className='modal'
-          onClose={() => setOpen(false)}
-          onOpen={() => setOpen(true)}
-          open={open}
-          size='small'
-          trigger={<Button floated='right'>Write a Review</Button>}>
-          <Header as='h1'>Write Your Review Below</Header>
-          <Modal.Content>
-            <Form>
-              <Form.Field>
-                <label>Name</label>
-                <input required placeholder='First Name & Last Initial' />
-              </Form.Field>
-              <Form.Field>
-                <label>Review Title</label>
-                <input required placeholder='Review title' />
-              </Form.Field>
-              <Form.Field>
-                <label>Review Content</label>
-                <textarea required placeholder='Review text' />
-              </Form.Field>
-              <Form.Field>
-                <label>Rating</label>
-                <input required placeholder='1 - 5' />
-              </Form.Field>
-              <Button type='submit'>Submit</Button>
-            </Form>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button color='green' inverted onClick={() => setOpen(false)}>
-              <Icon name='checkmark' /> Close
-            </Button>
-          </Modal.Actions>
-        </Modal>
+        <ReviewCreate user={user} />
       ) : (
         <Button floated='right'>
           <Link style={{ color: 'black' }} to='/sign-in'>
@@ -106,7 +73,7 @@ const Product = ({ user }) => {
       <Divider />
       <Grid.Row style={{ margin: '0 auto' }}>
         {reviews.map(review => (
-          <Reviews user={user} key={review.name} review={review} />
+          <Reviews user={user} key={review._id} review={review} />
         ))}
       </Grid.Row>
     </div>

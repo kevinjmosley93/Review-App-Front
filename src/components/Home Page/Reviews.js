@@ -1,12 +1,13 @@
 import React from 'react'
-import { Card, Button, Image, Icon, Rating } from 'semantic-ui-react'
+import { Card, Button, Icon, Rating } from 'semantic-ui-react'
 
 const Reviews = ({ review, user }) => {
+  console.log('this is review', review)
+  console.log('this is user', user)
   return (
     <div style={{ margin: '1.5rem' }} className='card'>
       <Card>
         <Card.Content>
-          <Image floated='right' size='mini' src={review.img} />
           <Card.Header>{review.title}</Card.Header>
           <Card.Meta>{review.name}</Card.Meta>
           <Card.Meta>
@@ -21,11 +22,13 @@ const Reviews = ({ review, user }) => {
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>
-            <Button basic color='green'>
-              <Icon name='thumbs up' />
+            <Button size='small' basic>
+              <Icon name='edit' />
+              Update Review
             </Button>
-            <Button basic color='red'>
-              <Icon name='thumbs down' />
+            <Button size='small' basic>
+              <Icon name='delete' />
+              Delete Review
             </Button>
           </div>
         </Card.Content>
