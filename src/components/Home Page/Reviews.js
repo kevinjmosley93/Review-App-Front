@@ -3,7 +3,7 @@ import { Card, Button, Icon, Rating } from 'semantic-ui-react'
 
 const Reviews = ({ review, user }) => {
   console.log('this is review', review)
-  console.log('this is user', user)
+  // console.log('this is user', user)
   return (
     <div style={{ margin: '1.5rem' }} className='card'>
       <Card>

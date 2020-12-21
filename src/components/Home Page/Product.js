@@ -44,7 +44,7 @@ const Product = ({ user }) => {
                   maxRating={5}
                 />
               )}
-              ({reviews.length})
+              ({reviews.length === 0 ? 'Add a review below' : reviews.length})
             </div>
             <p style={{ marginTop: '1.5rem' }}>
               Bacon ipsum dolor amet strip steak ham cow pork burgdoggen
