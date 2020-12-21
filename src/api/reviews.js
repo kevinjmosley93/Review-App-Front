@@ -11,3 +11,10 @@ export const createReviews = (user, review) => {
     data: { review }
   })
 }
+
+export const indexReviews = () => {
+  return axios({
+    method: 'GET',
+    url: apiUrl + '/reviews'
+  })
+}

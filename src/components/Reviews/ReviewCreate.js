@@ -12,7 +12,7 @@ const ReviewCreate = ({ user }) => {
       rating: 0
     }
   })
-  const handleChange = (e) => {
+  const handleChange = e => {
     console.log('changing')
     const updatedField = { [e.target.name]: e.target.value }
     setReview(currState => {
@@ -21,14 +21,16 @@ const ReviewCreate = ({ user }) => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault()
     createReviews(user, review.review)
       .then(res => {
         console.log('this is api respone', res)
-      }).then(
-        setOpen(false)
-      )
+      })
+      .then(setOpen(false))
+      .then(() => {
+        return review.review
+      })
       .catch(err => {
         console.log(err)
       })
@@ -47,19 +49,46 @@ const ReviewCreate = ({ user }) => {
         <Form onSubmit={handleSubmit}>
           <Form.Field>
             <label>Name</label>
-            <input value={review.name} onChange={handleChange} name='name' required placeholder='First Name & Last Initial' />
+            <input
+              value={review.name}
+              onChange={handleChange}
+              name='name'
+              required
+              placeholder='First Name & Last Initial'
+            />
           </Form.Field>
           <Form.Field>
             <label>Review Title</label>
-            <input value={review.title} onChange={handleChange} name='title' required placeholder='Review title' />
+            <input
+              value={review.title}
+              onChange={handleChange}
+              name='title'
+              required
+              placeholder='Review title'
+            />
           </Form.Field>
           <Form.Field>
             <label>Review Content</label>
-            <textarea value={review.content} onChange={handleChange} name='content' required placeholder='Review text' />
+            <textarea
+              value={review.content}
+              onChange={handleChange}
+              name='content'
+              required
+              placeholder='Review text'
+            />
           </Form.Field>
           <Form.Field>
             <label>Rating</label>
-            <input value={review.rating} onChange={handleChange} name='rating' required placeholder='1 - 5' />
+            <input
+              type='number'
+              min={1}
+              max={5}
+              value={review.rating}
+              onChange={handleChange}
+              name='rating'
+              required
+              placeholder='1 - 5'
+            />
           </Form.Field>
           <Button type='submit'>Submit</Button>
         </Form>
