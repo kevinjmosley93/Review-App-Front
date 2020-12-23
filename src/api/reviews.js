@@ -39,3 +39,13 @@ export const showReviews = (user, id) => {
     }
   })
 }
+
+export const deleteReviews = (user, id) => {
+  return axios({
+    method: 'DELETE',
+    url: apiUrl + '/reviews/' + id,
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }
+  })
+}

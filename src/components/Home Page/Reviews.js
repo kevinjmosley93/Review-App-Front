@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Button, Icon, Rating } from 'semantic-ui-react'
+import { Card, Rating } from 'semantic-ui-react'
+import ReviewDelete from '../Reviews/ReviewDelete'
 import ReviewUpdate from '../Reviews/ReviewUpdate'
 
 const Reviews = ({ review, setReview, user }) => {
@@ -31,10 +32,12 @@ const Reviews = ({ review, setReview, user }) => {
                 review={review}
                 reviewId={review._id}
               />
-              <Button size='small' basic>
-                <Icon name='delete' />
-                Delete Review
-              </Button>
+              <ReviewDelete
+                user={user}
+                setReview={setReview}
+                review={review}
+                reviewId={review._id}
+              />
             </div>
           ) : (
             <Link to='/sign-in'>
