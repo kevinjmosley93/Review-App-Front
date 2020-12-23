@@ -97,6 +97,11 @@ class App extends Component {
           />
           <AuthenticatedRoute
             user={user}
+            exact path='/home'
+            render={() => <Product user={user} />}
+          />
+          <AuthenticatedRoute
+            user={user}
             path='/reviews/:id'
             render={() => <Product user={user} />}
           />

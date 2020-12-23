@@ -11,11 +11,6 @@ const ReviewDelete = ({ user, review, reviewId, setReview }) => {
         setDeleted(true)
         console.log('this is the delete res', res)
       })
-      .then(() => {
-        if (deleted) {
-          return <Redirect to={`/reviews/${reviewId}`} />
-        }
-      })
       .catch(err => {
         console.log(err)
         // msgAlert({
@@ -24,6 +19,9 @@ const ReviewDelete = ({ user, review, reviewId, setReview }) => {
         //   variant: 'danger'
         // })
       })
+  }
+  if (deleted) {
+    return <Redirect to='/home' />
   }
   return (
     <Fragment>

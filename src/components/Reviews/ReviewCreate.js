@@ -39,7 +39,7 @@ const ReviewCreate = ({ user, reviewId }) => {
       })
   }
   if (created) {
-    return <Redirect to='/reviews'/>
+    return <Redirect to='/'/>
   }
   return (
     <Modal
