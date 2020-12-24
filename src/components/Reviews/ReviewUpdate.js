@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { Button, Form, Header, Icon, Modal } from 'semantic-ui-react'
 import { updateReviews, showReviews } from '../../api/reviews'
 
-const ReviewUpdate = ({ user, review, reviewId, setReview }) => {
+const ReviewUpdate = ({ user, reviewId }) => {
   const [open, setOpen] = useState(false)
   const [updated, setUpdated] = useState(false)
   const [reviewList, setReviewList] = useState({
@@ -18,19 +18,21 @@ const ReviewUpdate = ({ user, review, reviewId, setReview }) => {
     // show request
     showReviews(user, reviewId)
       .then(res => setReviewList(res.data.review))
-      .then(() => console.log('this is the use effect from review update'))
-      .catch(err => console.log(err))
+      .catch(err => {
+        return err
+        // console.log(err)
+      })
   }, [])
 
   const handleChange = e => {
-    console.log('changing')
+    // console.log('changing')
     const updatedField = { [e.target.name]: e.target.value }
     setReviewList(currState => {
       const updatedReview = { ...currState, ...updatedField }
       return updatedReview
     })
   }
-  console.log('this is id', reviewId)
+  // console.log('this is id', reviewId)
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -38,11 +40,12 @@ const ReviewUpdate = ({ user, review, reviewId, setReview }) => {
     updateReviews(user, reviewList, reviewId)
       .then(() => {
         setUpdated(true)
-        console.log('updated is', updated)
+        // console.log('updated is', updated)
       })
       .then(setOpen(false))
       .catch(err => {
-        console.log(err)
+        return err
+        // console.log(err)
       })
   }
   if (updated) {
@@ -107,12 +110,14 @@ const ReviewUpdate = ({ user, review, reviewId, setReview }) => {
           </Form.Field>
           <Button type='submit'>Submit</Button>
         </Form>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button color='green' inverted onClick={() => setOpen(false)}>
-          <Icon name='checkmark' /> Close
+        <Button
+          floated='left'
+          // inverted
+          // color='green'
+          onClick={() => setOpen(false)}>
+          Close
         </Button>
-      </Modal.Actions>
+      </Modal.Content>
     </Modal>
   )
 }

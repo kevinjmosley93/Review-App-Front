@@ -5,7 +5,7 @@ import ReviewDelete from '../Reviews/ReviewDelete'
 import ReviewUpdate from '../Reviews/ReviewUpdate'
 
 const Reviews = ({ review, setReview, user }) => {
-  console.log('this is review', review)
+  // console.log('this is review', review)
   // console.log('this is user', user)
   return (
     <div style={{ margin: '1.5rem' }} className='reviewCard'>

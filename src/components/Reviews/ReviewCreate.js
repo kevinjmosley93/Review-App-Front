@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Button, Form, Header, Icon, Modal } from 'semantic-ui-react'
+import { Button, Form, Header, Modal } from 'semantic-ui-react'
 import { createReviews } from '../../api/reviews'
 
 const ReviewCreate = ({ user, reviewId }) => {
@@ -15,31 +15,32 @@ const ReviewCreate = ({ user, reviewId }) => {
     }
   })
   const handleChange = e => {
-    console.log('changing')
+    // console.log('changing')
     const updatedField = { [e.target.name]: e.target.value }
     setReview(currState => {
       const updatedReview = { ...currState.review, ...updatedField }
       return { review: updatedReview }
     })
   }
-  console.log('this is id', review.review._id)
+  // console.log('this is id', review.review._id)
   const handleSubmit = e => {
     e.preventDefault()
     createReviews(user, review.review)
       .then(res => {
         setCreated(true)
-        console.log('this is api respone', res)
+        // console.log('this is api respone', res)
       })
       .then(setOpen(false))
       .then(() => {
         return review.review
       })
       .catch(err => {
-        console.log(err)
+        return err
+        // console.log(err)
       })
   }
   if (created) {
-    return <Redirect to='/'/>
+    return <Redirect to='/' />
   }
   return (
     <Modal
@@ -98,12 +99,14 @@ const ReviewCreate = ({ user, reviewId }) => {
           </Form.Field>
           <Button type='submit'>Submit</Button>
         </Form>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button color='green' inverted onClick={() => setOpen(false)}>
-          <Icon name='checkmark' /> Close
+        <Button
+          floated='left'
+          // inverted
+          // color='green'
+          onClick={() => setOpen(false)}>
+          Close
         </Button>
-      </Modal.Actions>
+      </Modal.Content>
     </Modal>
   )
 }

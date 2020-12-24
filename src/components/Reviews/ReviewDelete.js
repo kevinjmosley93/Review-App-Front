@@ -7,12 +7,13 @@ const ReviewDelete = ({ user, review, reviewId, setReview }) => {
   const [deleted, setDeleted] = useState(false)
   const handleDelete = () => {
     deleteReviews(user, reviewId)
-      .then(res => {
+      .then(() => {
         setDeleted(true)
-        console.log('this is the delete res', res)
+        // console.log('this is the delete res', res)
       })
       .catch(err => {
-        console.log(err)
+        return err
+        // console.log(err)
         // msgAlert({
         //   heading: 'Deletion Failed',
         //   message: 'Something went wrong: ' + err.message,

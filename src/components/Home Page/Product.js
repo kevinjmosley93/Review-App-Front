@@ -12,14 +12,14 @@ const Product = ({ user }) => {
     indexReviews(user)
       .then(res => {
         setReviews(res.data.review)
-        console.log('this is the res', res)
+        // console.log('this is the res', res)
       })
-      .catch(err => console.log(err))
+      .catch(err => err)
   }, [])
   const reviewAverage = reviews.reduce((sum, review) => {
     return sum + review.rating / reviews.length
   }, 0)
-  console.log('res from api in product component', reviewAverage)
+  // console.log('res from api in product component', reviewAverage)
   return (
     <div style={{ margin: '3rem' }}>
       <Grid>
@@ -73,7 +73,7 @@ const Product = ({ user }) => {
       <Divider />
       <Grid.Row style={{ margin: '0 auto' }}>
         {reviews.map(review => {
-          console.log('this is id', review._id)
+          // console.log('this is id', review._id)
           return (
             <Reviews
               setReview={setReviews}

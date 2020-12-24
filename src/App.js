@@ -12,10 +12,6 @@ import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
-import MovieIndex from './components/Movies/MovieIndex'
-import MovieCreate from './components/Movies/MovieCreate'
-import MovieShow from './components/Movies/MovieShow'
-import MovieUpdate from './components/Movies/MovieUpdate'
 import Product from './components/Home Page/Product'
 
 class App extends Component {
@@ -92,12 +88,14 @@ class App extends Component {
           />
           <AuthenticatedRoute
             user={user}
-            exact path='/reviews'
-            render={() => <Product user={user} />}
+            exact
+            path='/reviews'
+            render={() => <Product msgAlert={this.msgAlert} user={user} />}
           />
           <AuthenticatedRoute
             user={user}
-            exact path='/home'
+            exact
+            path='/home'
             render={() => <Product user={user} />}
           />
           <AuthenticatedRoute
@@ -121,35 +119,6 @@ class App extends Component {
             path='/change-password'
             render={() => (
               <ChangePassword msgAlert={this.msgAlert} user={user} />
-            )}
-          />
-          <AuthenticatedRoute
-            user={user}
-            path='/movies'
-            render={() => <MovieIndex user={user} msgAlert={this.msgAlert} />}
-          />
-          <AuthenticatedRoute
-            user={user}
-            path='/movie-create'
-            render={() => <MovieCreate user={user} msgAlert={this.msgAlert} />}
-          />
-          <AuthenticatedRoute
-            user={user}
-            path='/movie-show/:movieId'
-            render={({ match }) => (
-              <MovieShow user={user} msgAlert={this.msgAlert} match={match} />
-            )}
-          />
-          <AuthenticatedRoute
-            user={user}
-            path='/movie-update/:movieId'
-            render={({ match, history }) => (
-              <MovieUpdate
-                match={match}
-                history={history}
-                user={user}
-                msgAlert={this.msgAlert}
-              />
             )}
           />
         </main>
